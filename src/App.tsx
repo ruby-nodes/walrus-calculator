@@ -5,7 +5,7 @@ function App() {
   const [epochs, setEpochs] = useState(1);
   const [megabytes, setMegabytes] = useState(1);
   const [walPriceUSD, setWalPriceUSD] = useState<number | null>(null); // Initialize as null
-  const [sizeUnit, setSizeUnit] = useState<'MB' | 'GB'>('MB'); // State for size unit
+  const [sizeUnit, setSizeUnit] = useState<'MB' | 'GB' | 'TB'>('MB'); // State for size unit
   const [storagePrice, setStoragePrice] = useState<number | null>(null);
   const [writePrice, setWritePrice] = useState<number | null>(null);
 
@@ -69,7 +69,12 @@ function App() {
   const FROST_PER_WAL = 1000000000; // 1 WAL = 1 billion FROST
   const SUBSIDY_RATE = 0.8;
 
-  const adjustedMegabytes = sizeUnit === 'GB' ? megabytes * 1000 : megabytes; // Adjust size based on unit
+  const adjustedMegabytes =
+    sizeUnit === 'GB'
+      ? megabytes * 1000
+      : sizeUnit === 'TB'
+      ? megabytes * 1000000
+      : megabytes; // Adjust size based on unit
 
   // Calculate Total USD Cost
   const totalUSDCost =
@@ -136,10 +141,11 @@ function App() {
                 />
                 <select
                   value={sizeUnit}
-                  onChange={(e) => setSizeUnit(e.target.value as 'MB' | 'GB')}
+                  onChange={(e) => setSizeUnit(e.target.value as 'MB' | 'GB' | 'TB')}
                 >
                   <option value="MB">MB</option>
                   <option value="GB">GB</option>
+                  <option value="TB">TB</option>
                 </select>
               </label>
             </div>
