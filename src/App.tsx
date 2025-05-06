@@ -8,6 +8,7 @@ function App() {
   const [sizeUnit, setSizeUnit] = useState<'MB' | 'GB' | 'TB'>('MB'); // State for size unit
   const [storagePrice, setStoragePrice] = useState<number | null>(null);
   const [writePrice, setWritePrice] = useState<number | null>(null);
+  const [subsidyRate, setSubsidyRate] = useState<number | null>(null);
 
   useEffect(() => {
     console.log('Fetching WAL price...');
@@ -64,10 +65,39 @@ function App() {
       .catch((error) => {
         console.error('Error fetching storage and write prices:', error);
       });
+
+    console.log('Fetching subsidy rate...');
+    fetch('https://fullnode.mainnet.sui.io:443', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        jsonrpc: '2.0',
+        id: 1,
+        method: 'sui_getObject',
+        params: [
+          '0xb606eb177899edc2130c93bf65985af7ec959a2755dc126c953755e59324209e',
+          { showContent: true, showStorageRebate: true },
+        ],
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log('Subsidy rate fetched:', data);
+        const result = data.result.data.content.fields;
+        if (result) {
+          const subsidy = parseFloat(result.buyer_subsidy_rate);
+          console.log('Parsed subsidy rate:', subsidy);
+          if (!isNaN(subsidy)) setSubsidyRate(subsidy / 10000); // Convert basis points to a percentage
+        } else {
+          console.warn('Unexpected API response for subsidy rate:', data);
+        }
+      })
+      .catch((error) => {
+        console.error('Error fetching subsidy rate:', error);
+      });
   }, []);
 
   const FROST_PER_WAL = 1000000000; // 1 WAL = 1 billion FROST
-  const SUBSIDY_RATE = 0.8;
 
   const adjustedMegabytes =
     sizeUnit === 'GB'
@@ -78,8 +108,8 @@ function App() {
 
   // Calculate Total USD Cost
   const totalUSDCost =
-    walPriceUSD !== null && storagePrice !== null && writePrice !== null
-      ? ((writePrice + epochs * storagePrice) * adjustedMegabytes / FROST_PER_WAL) * walPriceUSD * SUBSIDY_RATE
+    walPriceUSD !== null && storagePrice !== null && writePrice !== null && subsidyRate !== null
+      ? ((writePrice + epochs * storagePrice * (1 - subsidyRate)) * adjustedMegabytes / FROST_PER_WAL) * walPriceUSD
       : 0; // Default to 0 if any price is not yet loaded
 
   return (
@@ -97,7 +127,7 @@ function App() {
             <li><strong>Storage Price:</strong> {storagePrice !== null ? storagePrice.toLocaleString() : 'Loading...'} FROST</li>
             <li><strong>Write Price:</strong> {writePrice !== null ? writePrice.toLocaleString() : 'Loading...'} FROST</li>
             <li><strong>Conversion:</strong> 1 WAL = 1,000,000,000 FROST</li>
-            <li><strong>Subsidy rate:</strong> All storage costs are currently <a href="https://www.walrus.xyz/blog/wal-staking-rewards" target="_blank">subsidized</a> by 20% by the Walrus foundation</li>
+            <li><strong>Subsidy rate:</strong> All storage costs are currently <a href="https://www.walrus.xyz/blog/wal-staking-rewards" target="_blank">subsidized</a> by {subsidyRate !== null ? (subsidyRate * 100) : 'Loading...'}% by the Walrus foundation</li>
           </ul>
           <section className="calculation-section">
             <h2>Calculate Total USD Cost</h2>
