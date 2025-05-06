@@ -135,7 +135,7 @@ ul {
 }
 
 ul li {
-  /margin-bottom: 10px; /* Add spacing only for single-line list items */
+  margin-bottom: 10px; /* Add spacing only for single-line list items */
 }
 
 ul li > *:not(:last-child) {
