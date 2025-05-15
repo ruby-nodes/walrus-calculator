@@ -4,6 +4,7 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
+  background-image: linear-gradient(to bottom, #1e3a8a, #193281);
 }
 
 #root {
@@ -58,25 +59,32 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 5px;
+  padding: 20px 0;
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
 }
 
 .calculation-section {
-  background: rgba(255, 255, 255, 0.1);
-  padding: 20px;
+  background: rgba(28, 41, 113, 0.6);
+  padding: 30px 40px;
   border-radius: 10px;
-  width: 80%;
-  max-width: 600px;
+  width: 40%;
+  max-width: 500px;
+  min-width: 380px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .input-group {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  margin-bottom: 20px;
+  align-items: center;
+  margin-bottom: 25px;
+  width: 100%;
 }
 
 .input-group label {
@@ -88,16 +96,19 @@ body {
 .input-group input,
 .input-group select {
   margin-top: 5px;
-  padding: 5px;
+  padding: 8px 10px;
   font-size: 1em;
   width: 100%;
   max-width: 300px;
   box-sizing: border-box;
+  border-radius: 5px;
+  border: 1px solid #ccc;
 }
 
 .result {
-  font-size: 1.5em;
-  margin-top: 20px;
+  font-size: 1.7em;
+  margin-top: 30px;
+  font-weight: bold;
 }
 
 .walrus-footer {
@@ -114,23 +125,27 @@ body {
 
 .form-container {
   display: flex;
+  flex-direction: row;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
   gap: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
 }
 
 .walrus-logo {
-  max-width: 450px; /* Tripled the size */
+  max-width: 350px;
   height: auto;
+  margin-left: auto;
+  margin-right: 20px;
 }
 
 ul {
   text-align: left;
   list-style-type: disc;
-  margin-left: 20px;
-  padding: 30px; /* Add a bit more padding */
-  background-color: rgba(255, 255, 255, 0.2); /* Slightly different background */
-  border-radius: 5px;
+  margin-left: 0;
+  padding-left: 20px;
   line-height: 2; /* Add more horizontal spacing between list elements */
 }
 
@@ -143,9 +158,41 @@ ul li > *:not(:last-child) {
 }
 
 .notes-list {
-  width: 80%; /* Match the width of the central form */
-  max-width: 600px; /* Same max-width as the form */
-  margin: 0 auto; /* Center align the list */
+  background: rgba(28, 41, 113, 0.6);
+  width: 30%;
+  max-width: 350px;
+  margin: 0; /* Remove auto margin for horizontal alignment */
   text-align: left;
-  padding: 20px; /* Increased padding to match the form */
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  list-style-type: disc;
+}
+
+@media (max-width: 768px) {
+  .form-container {
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+  }
+
+  .notes-list {
+    margin-top: 20px;
+    width: 90%;
+    max-width: none;
+  }
+
+  .calculation-section {
+    width: 90%;
+    max-width: none;
+    margin-bottom: 20px;
+  }
+
+  .walrus-logo {
+    display: none;
+  }
+
+  .walrus-main {
+    padding: 10px;
+  }
 }
