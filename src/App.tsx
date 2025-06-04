@@ -129,7 +129,6 @@ function App() {
             <li><strong>Conversion:</strong> 1 WAL = 1,000,000,000 FROST</li>
             <li><strong>Subsidy rate:</strong> All storage costs are currently <a href="https://www.walrus.xyz/blog/wal-staking-rewards" target="_blank">subsidized</a> by {subsidyRate !== null ? (subsidyRate * 100) : 'Loading...'}% by the Walrus foundation</li>
           </ul>
-          
           <section className="calculation-section">
             <h2>Calculate Total USD Cost</h2>
 
@@ -139,7 +138,7 @@ function App() {
                 <input
                   type="range"
                   min="1"
-                  max="52"
+                  max="52" // Updated max value for epochs slider
                   value={epochs}
                   onChange={(e) => setEpochs(Number(e.target.value))}
                 />
@@ -161,7 +160,7 @@ function App() {
                   type="range"
                   min="1"
                   max="1000"
-                  step="5"
+                  step="5" // Set step to 5
                   value={megabytes}
                   onChange={(e) => setMegabytes(Number(e.target.value))}
                 />
@@ -195,7 +194,6 @@ function App() {
 
             <p className="result">Total USD Cost: ${totalUSDCost.toFixed(2)}</p>
           </section>
-          
           <img
             src="/Walrus_Logo_4e51f3e010.jpg"
             alt="Walrus Logo"
