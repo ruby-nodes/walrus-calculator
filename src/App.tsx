@@ -128,6 +128,7 @@ function App() {
             <li><strong>Write Price:</strong> {writePrice !== null ? writePrice.toLocaleString() : 'Loading...'} FROST</li>
             <li><strong>Conversion:</strong> 1 WAL = 1,000,000,000 FROST</li>
             <li><strong>Subsidy rate:</strong> All storage costs are currently <a href="https://www.walrus.xyz/blog/wal-staking-rewards" target="_blank">subsidized</a> by {subsidyRate !== null ? (subsidyRate * 100) : 'Loading...'}% by the Walrus foundation</li>
+            <li>All files on Walrus are encoded with <a href='https://docs.wal.app/design/encoding.html' target='_blank'>erasure coding</a> which means their file size will be roughly increased by a factor of 4.5-5 to maintain distributed and resilient nature of the file storage</li>
           </ul>
           <section className="calculation-section">
             <h2>Calculate Total USD Cost</h2>
