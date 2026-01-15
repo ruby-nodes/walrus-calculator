@@ -42,7 +42,7 @@ function App() {
         id: 1,
         method: 'sui_getObject',
         params: [
-          '0xc5e430c7c517e99da14e67928b360f3260de47cb61f55338cdd9119f519c282c',
+          '0xe7d356f61c74ad511214bb69dc9e38f7cc364c085b007c6ea81461fc8ebe7dfe',
           { showContent: true, showStorageRebate: true },
         ],
       }),
@@ -109,7 +109,7 @@ function App() {
   // Calculate Total USD Cost
   const totalUSDCost =
     walPriceUSD !== null && storagePrice !== null && writePrice !== null && subsidyRate !== null
-      ? ((writePrice + epochs * storagePrice * (1 - subsidyRate)) * adjustedMegabytes / FROST_PER_WAL) * walPriceUSD
+      ? ((writePrice + epochs * storagePrice * (1 - subsidyRate)) * adjustedMegabytes / FROST_PER_WAL) * walPriceUSD * 5
       : 0; // Default to 0 if any price is not yet loaded
 
   return (
@@ -127,7 +127,6 @@ function App() {
             <li><strong>Storage Price:</strong> {storagePrice !== null ? storagePrice.toLocaleString() : 'Loading...'} FROST</li>
             <li><strong>Write Price:</strong> {writePrice !== null ? writePrice.toLocaleString() : 'Loading...'} FROST</li>
             <li><strong>Conversion:</strong> 1 WAL = 1,000,000,000 FROST</li>
-            <li><strong>Subsidy rate:</strong> All storage costs are currently <a href="https://www.walrus.xyz/blog/wal-staking-rewards" target="_blank">subsidized</a> by {subsidyRate !== null ? (subsidyRate * 100) : 'Loading...'}% by the Walrus foundation</li>
             <li>All files on Walrus are encoded with <a href='https://docs.wal.app/design/encoding.html' target='_blank'>erasure coding</a> which means their file size will be roughly increased by a factor of 4.5-5 to maintain distributed and resilient nature of the file storage</li>
           </ul>
           <section className="calculation-section">
